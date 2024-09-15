@@ -9,7 +9,7 @@ program
     .option('-c, --concurrency <number>', 'Number of concurrent requests', '10')
     .option('-d, --delay <ms>', 'Delay between each scan in milliseconds', '50')
     .option('-f, --file <path>', 'Path to file with URLs (one per line)')
-    .option('-o, --output <path>', 'Path to output results in JSON or CSV')
+    .option('-o, --output <path>', 'Path to output results in JSON, CSV or TXT format')
     .parse(process.argv);
 
 export const options = program.opts();

@@ -18,16 +18,20 @@
     "commander": "^12.1.0",
     "figlet": "^1.7.0",
     "inquirer": "^10.2.2",
+    "lodash": "^4.17.21",
     "ora": "^8.1.0",
     "p-limit": "^6.1.0",
     "progress": "^2.0.3",
+    "update-notifier": "^7.3.1",
     "wappalyzer": "6.10.47"
   },
   "devDependencies": {
     "@types/figlet": "^1.5.8",
     "@types/inquirer": "^9.0.7",
+    "@types/lodash": "^4.17.7",
     "@types/node": "^22.5.5",
     "@types/progress": "^2.0.7",
+    "@types/update-notifier": "^6.0.8",
     "typescript": "^5.6.2"
   }
 }

@@ -25,12 +25,16 @@ const scanWebsite = async ({ url, bar }: ScanWebsiteParams): Promise<ScanResult>
         const analysisResults = await website.analyze();
         const technologies = analysisResults.technologies.map(({ name }) => name).join(', ');
 
-        bar.interrupt(chalk.blue.bold(`\nScanning: ${chalk.green(url)}`));
-        bar.interrupt(chalk.yellow(`Technologies detected: ${chalk.magenta(technologies)}\n`));
+        bar.interrupt(chalk.blue.bold(`Website: ${chalk.green(url)}`));
 
+        if (technologies === '') bar.interrupt(chalk.gray(`No technologies detected\n`));
+        else bar.interrupt(chalk.yellow(`Technologies detected: ${chalk.magenta(technologies)}\n`));
+
+        // bar.interrupt(chalk.blue.bold(`\n${chalk.green(url)}: ${chalk.magenta(technologies)}`));
         return { url, technologies };
     } catch (error) {
-        bar.interrupt(chalk.red(`Error while scanning ${url}`));
+        bar.interrupt(chalk.blue.bold(`Website: ${chalk.red(url)}\n`));
+
         return { url, technologies: 'Error' };
     }
 };
