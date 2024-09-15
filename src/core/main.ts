@@ -7,17 +7,17 @@ import { exportResults } from '../utils/exporter.js';
 
 import { isValidUrl } from '../utils/validators.js';
 import { logError } from '../utils/logger.js';
+import figlet from 'figlet';
 
 export const main = async () => {
+
+    console.log(figlet.textSync('Wappalyzer CLI'));
+
     let urls: string[] = options.urls || [];
 
-    if (options.file) {
-        urls = getUrlsFromFile(options.file);
-    }
+    if (options.file) urls = getUrlsFromFile(options.file);
+    if (urls.length === 0) urls = await getUrlsFromPrompt();
 
-    if (urls.length === 0) {
-        urls = await getUrlsFromPrompt();
-    }
 
     urls = urls.filter(isValidUrl);
     if (urls.length === 0) {

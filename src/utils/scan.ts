@@ -8,7 +8,6 @@ import ProgressBar from 'progress';
 
 interface ScanWebsiteParams {
     url: string;
-    index: number;
     bar: ProgressBar;
 }
 
@@ -20,19 +19,18 @@ interface RunScan {
 
 const wappalyzer = new Wappalyzer();
 
-const scanWebsite = async ({ url, index, bar }: ScanWebsiteParams): Promise<ScanResult> => {
+const scanWebsite = async ({ url, bar }: ScanWebsiteParams): Promise<ScanResult> => {
     try {
         const website = await wappalyzer.open(url);
         const analysisResults = await website.analyze();
         const technologies = analysisResults.technologies.map(({ name }) => name).join(', ');
 
-        bar.interrupt(chalk.blue.bold(`\n[${index + 1}] Scanning: ${chalk.green(url)}`));
-
+        bar.interrupt(chalk.blue.bold(`\nScanning: ${chalk.green(url)}`));
         bar.interrupt(chalk.yellow(`Technologies detected: ${chalk.magenta(technologies)}\n`));
 
         return { url, technologies };
     } catch (error) {
-        console.error(chalk.red(`Error while scanning ${url}`));
+        bar.interrupt(chalk.red(`Error while scanning ${url}`));
         return { url, technologies: 'Error' };
     }
 };
@@ -43,7 +41,7 @@ const runScan = async ({ urls, concurrencyLimit, delay }: RunScan): Promise<Scan
     await wappalyzer.init();
 
     const bar = new ProgressBar(
-        `Scanning | ${chalk.whiteBright(':bar')} | ${chalk.cyanBright(':percent')} | ${chalk.gray(':etas')}`,
+        `Scanning | ${chalk.whiteBright(':bar')} | ${chalk.cyanBright(':percent')} | ETA: ${chalk.gray(':etas')}`,
         {
             total: urls.length,
             complete: '\u2588',
@@ -55,9 +53,9 @@ const runScan = async ({ urls, concurrencyLimit, delay }: RunScan): Promise<Scan
 
     try {
         await Promise.all(
-            urls.map((url, index) =>
+            urls.map(url =>
                 concurrencyLimit(async () => {
-                    const result = await scanWebsite({ url, index, bar });
+                    const result = await scanWebsite({ url, bar });
                     results.push(result);
                     bar.tick();
                     await sleep(delay);

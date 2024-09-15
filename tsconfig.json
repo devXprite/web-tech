@@ -4,10 +4,10 @@
         "outDir": "dist",
         "strict": true,
         "target": "es6",
-        "module": "ESNext",
+        "module": "ES2015",
         "sourceMap": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "moduleResolution": "node",
+        "moduleResolution": "node"
     }
 }
