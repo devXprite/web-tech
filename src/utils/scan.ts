@@ -1,9 +1,11 @@
 import Wappalyzer from 'wappalyzer';
 import chalk from 'chalk';
-import { sleep } from '.';
+import { sleep } from './index.js';
 
 import type { ScanResult } from '../types';
 import { LimitFunction } from 'p-limit';
+import ProgressBar from 'progress';
+
 
 interface ScanWebsiteParams {
     url: string;
@@ -36,10 +38,23 @@ const scanWebsite = async ({ url, index }: ScanWebsiteParams): Promise<ScanResul
 
 const runScan = async ({ urls, concurrencyLimit, delay }: RunScan): Promise<ScanResult[]> => {
     const results: ScanResult[] = [];
+    
+    await wappalyzer.init();
+    
 
-    for (const [index, url] of urls.entries()) {
-        await concurrencyLimit(() => scanWebsite({ url, index }));
-        await sleep(delay);
+    try {
+        await Promise.all(
+            urls.map((url, index) =>
+                concurrencyLimit(async () => {
+                    const result = await scanWebsite({ url, index });
+                    results.push(result);
+                    //   bar.tick();
+                    await sleep(delay);
+                })
+            )
+        );
+    } finally {
+        await wappalyzer.destroy();
     }
 
     return results;

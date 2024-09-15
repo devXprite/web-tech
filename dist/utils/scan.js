@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import Wappalyzer from 'wappalyzer';
 import chalk from 'chalk';
-import { sleep } from '.';
+import { sleep } from './index.js';
 const wappalyzer = new Wappalyzer();
 const scanWebsite = (_a) => __awaiter(void 0, [_a], void 0, function* ({ url, index }) {
     try {
@@ -26,10 +26,22 @@ const scanWebsite = (_a) => __awaiter(void 0, [_a], void 0, function* ({ url, in
     }
 });
 const runScan = (_a) => __awaiter(void 0, [_a], void 0, function* ({ urls, concurrencyLimit, delay }) {
+    yield wappalyzer.init();
     const results = [];
-    for (const [index, url] of urls.entries()) {
-        yield concurrencyLimit(() => scanWebsite({ url, index }));
-        yield sleep(delay);
+    // for (const [index, url] of urls.entries()) {
+    //     await concurrencyLimit(() => scanWebsite({ url, index })).then(r => results.push(r));
+    //     await sleep(delay);
+    // }
+    try {
+        yield Promise.all(urls.map((url, index) => concurrencyLimit(() => __awaiter(void 0, void 0, void 0, function* () {
+            const result = yield scanWebsite({ url, index });
+            results.push(result);
+            //   bar.tick();
+            yield sleep(delay);
+        }))));
+    }
+    finally {
+        yield wappalyzer.destroy();
     }
     return results;
 });

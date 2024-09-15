@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import fs from 'fs';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import { isValidUrl } from './validators';
+import { isValidUrl } from './validators.js';
 const getUrlsFromPrompt = () => __awaiter(void 0, void 0, void 0, function* () {
     const answers = yield inquirer.prompt([
         {

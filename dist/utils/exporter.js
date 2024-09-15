@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { logSuccess, logError } from './logger';
+import { logSuccess, logError } from './logger.js';
 export const exportResults = (results, filePath) => {
     const ext = path.extname(filePath).toLowerCase();
     try {

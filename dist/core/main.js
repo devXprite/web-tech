@@ -8,12 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import pLimit from 'p-limit';
-import { options } from '../commands/program';
-import { runScan } from '../utils/scan';
-import { getUrlsFromFile, getUrlsFromPrompt } from '../utils/input';
-import { exportResults } from '../utils/exporter';
-import { isValidUrl } from '../utils/validators';
-import { logError } from '../utils/logger';
+import { options } from '../commands/program.js';
+import { runScan } from '../utils/scan.js';
+import { getUrlsFromFile, getUrlsFromPrompt } from '../utils/input.js';
+import { exportResults } from '../utils/exporter.js';
+import { isValidUrl } from '../utils/validators.js';
+import { logError } from '../utils/logger.js';
 export const main = () => __awaiter(void 0, void 0, void 0, function* () {
     let urls = options.urls || [];
     if (options.file) {

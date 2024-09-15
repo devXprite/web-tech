@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { options } from '../commands/program';
+import { options } from '../commands/program.js';
 
 const logInfo = (message: string): void => {
     if (!options.quiet) {

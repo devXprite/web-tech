@@ -1,12 +1,12 @@
 import pLimit from 'p-limit';
 
-import { options } from '../commands/program';
-import { runScan } from '../utils/scan';
-import { getUrlsFromFile, getUrlsFromPrompt } from '../utils/input';
-import { exportResults } from '../utils/exporter';
+import { options } from '../commands/program.js';
+import { runScan } from '../utils/scan.js';
+import { getUrlsFromFile, getUrlsFromPrompt } from '../utils/input.js';
+import { exportResults } from '../utils/exporter.js';
 
-import { isValidUrl } from '../utils/validators';
-import { logError } from '../utils/logger';
+import { isValidUrl } from '../utils/validators.js';
+import { logError } from '../utils/logger.js';
 
 export const main = async () => {
     let urls: string[] = options.urls || [];
